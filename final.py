@@ -10,7 +10,8 @@ from ultralytics import YOLO
 mtcnn = MTCNN(keep_all=True, device='cuda' if torch.cuda.is_available() else'cpu', thresholds=[0.6, 0.7, 0.7], min_face_size=20, margin=20)
 yolo_model = YOLO('yolov8n.pt')
 cap = cv2.VideoCapture(0)
-
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640*1.5)  # Set lower resolution for better performance
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480*1.5)
 object_detection_model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
 object_detection_model.eval()
 object_detection_model = object_detection_model.to('cuda' if torch.cuda.is_available() else 'cpu')
